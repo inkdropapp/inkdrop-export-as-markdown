@@ -3,6 +3,7 @@ import { remote } from 'electron'
 import path from 'path'
 import sanitize from 'sanitize-filename'
 import fs from 'fs'
+import touch from 'touch'
 const { dialog, app } = remote
 
 module.exports = {
@@ -45,6 +46,7 @@ module.exports = {
         const fileName = sanitize(note.title) + '.md'
         const filePath = path.join(pathToSave, fileName)
         fs.writeFileSync(filePath, note.body)
+        touch.sync(filePath, { time: new Date(note.updatedAt) })
       }
     })
 

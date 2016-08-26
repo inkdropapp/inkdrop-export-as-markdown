@@ -9,7 +9,8 @@
   "main": "index",
   "styleSheets": [],
   "dependencies": {
-    "sanitize-filename": "^1.6.0"
+    "sanitize-filename": "^1.6.0",
+    "touch": "^1.0.0"
   },
   "standard": {
     "parser": "babel-eslint",
