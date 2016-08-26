@@ -1,0 +1,21 @@
+{
+  "version": "0.1.0",
+  "name": "export-all",
+  "description": "Export all data",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/inkdropapp/inkdrop-export-all.git"
+  },
+  "main": "index",
+  "styleSheets": [],
+  "dependencies": {
+    "sanitize-filename": "^1.6.0"
+  },
+  "standard": {
+    "parser": "babel-eslint",
+    "globals": [
+      "inkdrop",
+      "debug"
+    ]
+  }
+}

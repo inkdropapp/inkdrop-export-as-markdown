@@ -1,0 +1,15 @@
+{
+  "menu": [
+    {
+      "label": "File",
+      "submenu": [
+        {
+          "label": "Export",
+          "submenu": [
+            { "label": "All Notes..", "command": "export-all:export" }
+          ]
+        }
+      ]
+    }
+  ]
+}
