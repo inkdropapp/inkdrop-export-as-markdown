@@ -4,6 +4,7 @@ import path from 'path'
 import sanitize from 'sanitize-filename'
 import fs from 'fs'
 import touch from 'touch'
+import moment from 'moment'
 const { dialog, app } = remote
 
 module.exports = {
@@ -41,19 +42,53 @@ module.exports = {
     const notes = await app.db.local.notes.findInBook(book._id)
 
     fs.mkdirSync(pathToSave)
-    notes.forEach((note) => {
-      if (note.body) {
-        const fileName = sanitize(note.title) + '.md'
-        const filePath = path.join(pathToSave, fileName)
-        fs.writeFileSync(filePath, note.body)
-        touch.sync(filePath, { time: new Date(note.updatedAt) })
-      }
-    })
+    for (let i = 0; i < notes.length; ++i) {
+      await this.exportNote(notes[i], pathToSave)
+    }
 
     if (book.children) {
       await book.children.reduce((promise, childBook) => {
         return promise.then(() => this.exportBook(pathToSave, childBook))
       }, Promise.resolve())
+    }
+  },
+
+  async exportNote (note, pathToSave) {
+    if (note.body) {
+      const datestr = moment(note.createdAt).format('YYYYMMDD')
+      const fileName = sanitize(datestr + '-' + note.title) + '.md'
+      const filePath = path.join(pathToSave, fileName)
+      let body = '# ' + note.title + '\n\n' + note.body
+
+      // find attachments
+      const uris = body.match(/inkdrop:\/\/file:[^\) ]*/g) || []
+      for (let i = 0; i < uris.length; ++i) {
+        const uri = uris[i]
+        const imagePath = await this.exportImage(uri, pathToSave)
+        if (imagePath) {
+          body = body.replace(uri, imagePath)
+        }
+      }
+
+      fs.writeFileSync(filePath, body)
+      touch.sync(filePath, { time: new Date(note.updatedAt) })
+    }
+  },
+
+  async exportImage (uri, pathToSave) {
+    try {
+      const [ , docid ] = uri.match(/^inkdrop:\/\/(file:.*)$/)
+      const file = await app.db.local.files.get(docid, { attachments: true })
+      const name = Object.keys(file._attachments)[0]
+      const att = file._attachments[name]
+      const data = new Buffer(att.data, 'base64')
+      const fileName = docid.split(':')[1] + '-' + name
+      const filePath = path.join(pathToSave, fileName)
+      fs.writeFileSync(filePath, data)
+      return fileName
+    } catch (e) {
+      console.error('Failed to export image file:', e)
+      return false
     }
   },
 
