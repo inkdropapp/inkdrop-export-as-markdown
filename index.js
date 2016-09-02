@@ -77,15 +77,8 @@ module.exports = {
 
   async exportImage (uri, pathToSave) {
     try {
-      const [ , docid ] = uri.match(/^inkdrop:\/\/(file:.*)$/)
-      const file = await app.db.local.files.get(docid, { attachments: true })
-      const name = Object.keys(file._attachments)[0]
-      const att = file._attachments[name]
-      const data = new Buffer(att.data, 'base64')
-      const fileName = docid.split(':')[1] + '-' + name
-      const filePath = path.join(pathToSave, fileName)
-      fs.writeFileSync(filePath, data)
-      return fileName
+      const file = await inkdrop.models.File.getDocumentFromUri(uri)
+      return file.saveFileSync(pathToSave)
     } catch (e) {
       console.error('Failed to export image file:', e)
       return false
