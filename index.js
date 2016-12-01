@@ -39,7 +39,7 @@ module.exports = {
   async exportBook (parentDir, book) {
     const dirName = sanitize(book.name, { replacement: '-' })
     const pathToSave = path.join(parentDir, dirName)
-    const notes = await app.db.local.notes.findInBook(book._id)
+    const { docs: notes } = await app.db.local.notes.findInBook(book._id, { limit: false })
 
     fs.mkdirSync(pathToSave)
     for (let i = 0; i < notes.length; ++i) {
