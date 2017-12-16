@@ -13,6 +13,7 @@
     "dev": "babel src/ -s -d lib/ --watch"
   },
   "dependencies": {
+    "moment": "^2.14.1",
     "sanitize-filename": "^1.6.0",
     "touch": "^1.0.0"
   },
