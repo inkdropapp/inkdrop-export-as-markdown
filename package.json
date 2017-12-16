@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/inkdropapp/inkdrop-export-all.git"
   },
-  "main": "index",
+  "main": "lib/index.js",
   "styleSheets": [],
   "scripts": {
     "build": "babel src/ -d lib/",
