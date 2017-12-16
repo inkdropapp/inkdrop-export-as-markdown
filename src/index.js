@@ -87,5 +87,4 @@ module.exports = {
   deactivate () {
     this.subscription.dispose()
   }
-
 }
