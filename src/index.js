@@ -1,4 +1,3 @@
-'use babel'
 import { remote } from 'electron'
 import path from 'path'
 import sanitize from 'sanitize-filename'
