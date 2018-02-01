@@ -6,10 +6,16 @@
         {
           "label": "Export",
           "submenu": [
-            { "label": "All Notes..", "command": "export-as-markdown:all" }
+            { "label": "All Notes..", "command": "export-as-markdown:all" },
+            { "label": "As Markdown..", "command": "export-as-markdown:single" }
           ]
         }
       ]
     }
-  ]
+  ],
+  "context-menu": {
+    ".note-list-item-view": [
+      { "label": "Export As Markdown..", "command": "export-as-markdown:single" }
+    ]
+  }
 }

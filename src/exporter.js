@@ -28,6 +28,28 @@ export async function exportAll() {
   }
 }
 
+export async function exportSingleNote() {
+  const { document } = inkdrop.flux.getStore('editor').getState()
+  const pathToSave = dialog.showSaveDialog({
+    title: 'Save Markdown File',
+    defaultPath: `${document.title}.md`,
+    filters: [{ name: 'Markdown Files', extensions: ['md'] }]
+  })
+  if (pathToSave) {
+    try {
+      const destDir = path.dirname(pathToSave)
+      const fileName = path.basename(pathToSave)
+      await exportNote(document, destDir, fileName)
+    } catch (e) {
+      console.error('Failed to export:', e)
+      inkdrop.notifications.addError('Failed to export', {
+        detail: e.message,
+        dismissable: true
+      })
+    }
+  }
+}
+
 export async function exportBook(parentDir, book) {
   const dirName = sanitize(book.name, { replacement: '-' })
   const pathToSave = path.join(parentDir, dirName)
@@ -47,10 +69,10 @@ export async function exportBook(parentDir, book) {
   }
 }
 
-export async function exportNote(note, pathToSave) {
+export async function exportNote(note, pathToSave, fileName) {
   if (note.body) {
     const datestr = moment(note.createdAt).format('YYYYMMDD')
-    const fileName = sanitize(datestr + '-' + note.title) + '.md'
+    fileName = fileName || sanitize(datestr + '-' + note.title) + '.md'
     const filePath = path.join(pathToSave, fileName)
     let body = '# ' + note.title + '\n\n' + note.body
 
