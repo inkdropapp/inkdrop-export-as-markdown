@@ -6,7 +6,7 @@
         {
           "label": "Export",
           "submenu": [
-            { "label": "All Notes..", "command": "export-all:export" }
+            { "label": "All Notes..", "command": "export-as-markdown:all" }
           ]
         }
       ]

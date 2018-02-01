@@ -1,11 +1,11 @@
 module.exports = {
-  activate () {
+  activate() {
     this.subscription = inkdrop.commands.add(document.body, {
       'export-all:export': () => this.execute()
     })
   },
 
-  execute () {
+  execute() {
     const { exportAll } = require('./exporter')
     exportAll()
   }

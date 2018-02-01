@@ -6,32 +6,34 @@ import touch from 'touch'
 import moment from 'moment'
 const { dialog, app } = remote
 
-export async function exportAll () {
+export async function exportAll() {
   const pathArrayToSave = dialog.showOpenDialog({
     title: 'Select a directory to export all notes',
     properties: ['openDirectory', 'createDirectory']
   })
   if (pathArrayToSave) {
-    const [ pathToSave ] = pathArrayToSave
+    const [pathToSave] = pathArrayToSave
     const books = inkdrop.flux.stores.bookList.getState().bookTree
     try {
-      await books.reduce(
-        (promise, book) => {
-          return promise.then(() => exportBook(pathToSave, book))
-        },
-        Promise.resolve()
-      )
+      await books.reduce((promise, book) => {
+        return promise.then(() => exportBook(pathToSave, book))
+      }, Promise.resolve())
     } catch (e) {
       console.error('Failed to export:', e)
-      inkdrop.notifications.addError('Failed to export', { detail: e.message, dismissable: true })
+      inkdrop.notifications.addError('Failed to export', {
+        detail: e.message,
+        dismissable: true
+      })
     }
   }
 }
 
-export async function exportBook (parentDir, book) {
+export async function exportBook(parentDir, book) {
   const dirName = sanitize(book.name, { replacement: '-' })
   const pathToSave = path.join(parentDir, dirName)
-  const { docs: notes } = await app.db.local.notes.findInBook(book._id, { limit: false })
+  const { docs: notes } = await app.db.local.notes.findInBook(book._id, {
+    limit: false
+  })
 
   fs.mkdirSync(pathToSave)
   for (let i = 0; i < notes.length; ++i) {
@@ -45,7 +47,7 @@ export async function exportBook (parentDir, book) {
   }
 }
 
-export async function exportNote (note, pathToSave) {
+export async function exportNote(note, pathToSave) {
   if (note.body) {
     const datestr = moment(note.createdAt).format('YYYYMMDD')
     const fileName = sanitize(datestr + '-' + note.title) + '.md'
@@ -67,7 +69,7 @@ export async function exportNote (note, pathToSave) {
   }
 }
 
-export async function exportImage (uri, pathToSave) {
+export async function exportImage(uri, pathToSave) {
   try {
     const file = await inkdrop.models.File.getDocumentFromUri(uri)
     return file.saveFileSync(pathToSave)
