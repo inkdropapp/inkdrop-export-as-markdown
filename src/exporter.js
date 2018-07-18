@@ -72,7 +72,7 @@ export async function exportBook(parentDir, book) {
 export async function exportNote(note, pathToSave, fileName) {
   if (note.body) {
     const datestr = moment(note.createdAt).format('YYYYMMDD')
-    fileName = fileName || sanitize(datestr + '-' + note.title) + '.md'
+    fileName = fileName || sanitize(datestr + '-' + note.title + '-' + note._id) + '.md'
     const filePath = path.join(pathToSave, fileName)
     let body = '# ' + note.title + '\n\n' + note.body
 
