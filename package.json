@@ -14,7 +14,7 @@
     "lint": "eslint src"
   },
   "dependencies": {
-    "inkdrop-export-utils": "^2.1.0",
+    "inkdrop-export-utils": "^2.2.0",
     "moment": "^2.24.0",
     "sanitize-filename": "^1.6.1",
     "touch": "^3.1.0"

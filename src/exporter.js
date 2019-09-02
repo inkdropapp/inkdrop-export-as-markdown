@@ -85,7 +85,7 @@ export async function exportNote(note, pathToSave, fileName) {
       sanitize(datestr + '-' + note.title + '-' + note._id.substr(5)) + '.md'
     const filePath = path.join(pathToSave, fileName)
     let body = '# ' + note.title + '\n\n' + note.body
-    body = await replaceImages(body, pathToSave)
+    body = await replaceImages(body, pathToSave, pathToSave)
 
     fs.writeFileSync(filePath, body)
     touch.sync(filePath, { time: new Date(note.updatedAt) })
