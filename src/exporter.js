@@ -9,7 +9,7 @@ import { replaceImages } from 'inkdrop-export-utils'
 const { dialog } = remote
 
 export async function exportAll() {
-  const pathArrayToSave = dialog.showOpenDialog({
+  const { filePaths: pathArrayToSave } = await dialog.showOpenDialog({
     title: 'Select a directory to export all notes',
     properties: ['openDirectory', 'createDirectory']
   })
@@ -37,7 +37,7 @@ export async function exportAll() {
 
 export async function exportSingleNote() {
   const { editingNote } = inkdrop.store.getState()
-  const pathToSave = dialog.showSaveDialog({
+  const { filePath: pathToSave } = await dialog.showSaveDialog({
     title: 'Save Markdown File',
     defaultPath: `${editingNote.title}.md`,
     filters: [{ name: 'Markdown Files', extensions: ['md'] }]
