@@ -65,7 +65,7 @@ export async function exportBook(parentDir, book) {
     limit: false
   })
 
-  fs.mkdirSync(pathToSave)
+  !fs.existsSync(path) && fs.mkdirSync(pathToSave)
   for (let i = 0; i < notes.length; ++i) {
     await exportNote(notes[i], pathToSave)
   }
