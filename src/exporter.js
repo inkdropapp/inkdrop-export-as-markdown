@@ -3,7 +3,6 @@ import path from 'path'
 import sanitize from 'sanitize-filename'
 import fs from 'fs'
 import touch from 'touch'
-import moment from 'moment'
 import { logger } from 'inkdrop'
 import { replaceImages } from 'inkdrop-export-utils'
 const { dialog } = remote
@@ -79,7 +78,7 @@ export async function exportBook(parentDir, book) {
 
 export async function exportNote(note, pathToSave, fileName) {
   if (note.body) {
-    const datestr = moment(note.createdAt).format('YYYYMMDD')
+    const datestr = new Date(note.createdAt).toISOString().split('T')[0].replace(/-/g, '')
     fileName =
       fileName ||
       sanitize(datestr + '-' + note.title + '-' + note._id.substr(5)) + '.md'
