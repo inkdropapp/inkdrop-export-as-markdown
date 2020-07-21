@@ -78,7 +78,10 @@ export async function exportBook(parentDir, book) {
 
 export async function exportNote(note, pathToSave, fileName) {
   if (note.body) {
-    const datestr = new Date(note.createdAt).toISOString().split('T')[0].replace(/-/g, '')
+    const datestr = new Date(note.createdAt)
+      .toISOString()
+      .split('T')[0]
+      .replace(/-/g, '')
     fileName =
       fileName ||
       sanitize(datestr + '-' + note.title + '-' + note._id.substr(5)) + '.md'
