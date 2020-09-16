@@ -34,24 +34,66 @@ export async function exportAll() {
   }
 }
 
-export async function exportSingleNote() {
-  const { editingNote } = inkdrop.store.getState()
+export async function exportSelectedNotes() {
+  const { noteListBar, notes } = inkdrop.store.getState()
+  if (noteListBar.selectedNoteIds.length > 1) {
+    inkdrop.notifications.addInfo('Exporting notes started', {
+      detail: 'It may take a while..',
+      dismissable: true
+    })
+    await exportMultipleNotes(noteListBar.selectedNoteIds)
+    inkdrop.notifications.addInfo('Exporting notes completed', {
+      detail: '',
+      dismissable: true
+    })
+  } else if (noteListBar.selectedNoteIds.length === 1) {
+    const note = notes.hashedItems[noteListBar.selectedNoteIds[0]]
+    exportSingleNote(note)
+  } else {
+    inkdrop.notifications.addError('No note opened', {
+      detail: 'Please open a note to export',
+      dismissable: true
+    })
+  }
+
+}
+
+async function exportSingleNote(note) {
   const { filePath: pathToSave } = await dialog.showSaveDialog({
     title: 'Save Markdown File',
-    defaultPath: `${editingNote.title}.md`,
+    defaultPath: `${note.title}.md`,
     filters: [{ name: 'Markdown Files', extensions: ['md'] }]
   })
   if (pathToSave) {
     try {
       const destDir = path.dirname(pathToSave)
       const fileName = path.basename(pathToSave)
-      await exportNote(editingNote, destDir, fileName)
+      await exportNote(note, destDir, fileName)
     } catch (e) {
-      logger.error('Failed to export editing note:', e, editingNote)
+      logger.error('Failed to export editing note:', e, note)
       inkdrop.notifications.addError('Failed to export editing note', {
         detail: e.message,
         dismissable: true
       })
+    }
+  }
+}
+
+async function exportMultipleNotes(noteIds) {
+  const { notes } = inkdrop.store.getState()
+  const { filePaths: res } = await dialog.showOpenDialog(inkdrop.window, {
+    title: 'Select Destination Directory',
+    properties: ['openDirectory']
+  })
+  if (res instanceof Array && res.length > 0) {
+    const destDir = res[0]
+
+    for (let noteId of noteIds) {
+      const note = notes.hashedItems[noteId]
+      if (note) {
+        const fileName = `${note.title}.md`
+        await exportNote(note, destDir, fileName)
+      }
     }
   }
 }

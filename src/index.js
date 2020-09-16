@@ -2,7 +2,7 @@ module.exports = {
   activate() {
     this.subscription = inkdrop.commands.add(document.body, {
       'export-as-markdown:all': () => this.exportAll(),
-      'export-as-markdown:single': () => this.exportSingleNote()
+      'export-as-markdown:selections': () => this.exportSelectedNotes()
     })
   },
 
@@ -11,8 +11,8 @@ module.exports = {
     exportAll()
   },
 
-  exportSingleNote() {
-    const { exportSingleNote } = require('./exporter')
-    exportSingleNote()
+  exportSelectedNotes() {
+    const { exportSelectedNotes } = require('./exporter')
+    exportSelectedNotes()
   }
 }
