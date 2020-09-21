@@ -9,9 +9,7 @@
   "main": "lib/index.js",
   "styleSheets": [],
   "scripts": {
-    "build": "babel src/ -d lib/",
-    "dev": "babel src/ -s -d lib/ --watch",
-    "lint": "eslint src"
+    "lint": "eslint lib"
   },
   "dependencies": {
     "inkdrop-export-utils": "^3.2.0",
@@ -19,11 +17,6 @@
     "touch": "^3.1.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.5",
-    "@babel/core": "^7.10.5",
-    "@babel/plugin-proposal-class-properties": "^7.10.4",
-    "@babel/preset-env": "^7.10.4",
-    "@babel/preset-react": "^7.10.4",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.5.0",
     "eslint-config-prettier": "^6.11.0",

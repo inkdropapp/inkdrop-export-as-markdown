@@ -22,6 +22,9 @@
         "label": "Export As Markdown..",
         "command": "export-as-markdown:selections"
       }
+    ],
+    ".sidebar-menu .sidebar-menu-book-list-item, .sidebar-book-filter-menu .sidebar-menu-book-list-item": [
+      { "label": "Export as Markdown..", "command": "export-as-markdown:book" }
     ]
   }
 }
