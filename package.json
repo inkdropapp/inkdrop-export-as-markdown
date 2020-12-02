@@ -12,7 +12,7 @@
     "lint": "eslint lib"
   },
   "dependencies": {
-    "inkdrop-export-utils": "^3.2.4",
+    "inkdrop-export-utils": "^3.2.5",
     "sanitize-filename": "^1.6.3",
     "touch": "^3.1.0"
   },
