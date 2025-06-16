@@ -1,9 +1,0 @@
-root: true
-extends:
-  - prettier
-parserOptions:
-  ecmaVersion: 11
-env: {}
-globals: {}
-rules:
-  no-useless-escape: 0
