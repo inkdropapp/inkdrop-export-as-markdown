@@ -17,7 +17,7 @@
     }
   ],
   "context-menu": {
-    ".note-list-item-view": [
+    ".note-list-item-view, .editor-header-more .menu": [
       {
         "label": "Export As Markdown..",
         "command": "export-as-markdown:selections"
