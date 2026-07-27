@@ -11,9 +11,6 @@
   "scripts": {
     "lint": "eslint lib"
   },
-  "dependencies": {
-    "sanitize-filename": "^1.6.3"
-  },
   "devDependencies": {
     "eslint": "^9.29.0",
     "eslint-config-prettier": "^10.1.5",
