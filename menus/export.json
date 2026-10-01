@@ -25,8 +25,13 @@
     ],
     ".sidebar-menu .sidebar-menu-book-list-item, .sidebar-book-filter-menu .sidebar-menu-book-list-item": [
       {
-        "label": "Export as Markdown..",
-        "command": "export-as-markdown:notebook"
+        "label": "Export",
+        "submenu": [
+          {
+            "label": "As Markdown..",
+            "command": "export-as-markdown:notebook"
+          }
+        ]
       }
     ]
   }
