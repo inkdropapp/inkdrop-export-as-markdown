@@ -1,3 +1,6 @@
+> [!IMPORTANT]
+> This repository has moved to [inkdropapp/plugins](https://github.com/inkdropapp/plugins): [`packages/export-as-markdown`](https://github.com/inkdropapp/plugins/tree/main/packages/export-as-markdown). It is archived and read-only; please open issues and pull requests there.
+
 \[[Website](https://www.inkdrop.app/)\] \[[User Forum](https://forum.inkdrop.app/)\] \[[API Docs](https://docs.inkdrop.app/)\]
 
 # Export as Markdown
